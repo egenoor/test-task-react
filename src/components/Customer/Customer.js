@@ -1,42 +1,52 @@
 import React, { Component } from 'react'
 import './Customer.scss'
- 
+import CustomerListButtons from '../CustomerListButtons'
+
 class Customer extends Component {
   constructor(props){
     super(props)
     this.state = {
-      isVisible: false
+      isEditMode: false,
+      areButtonsVisible: false
     }
-    console.log(this.props)
-    this.showHandler = this.show.bind(this)
+    this.handleShowButtons = this.showButtons.bind(this)
+    this.handleEditMode = this.enableEditMode.bind(this)
   }
-
-  show () {
+  showButtons() {
     this.setState({
-      isVisible: !this.state.isVisible
+      areButtonsVisible: !this.state.areButtonsVisible
     })
   }
-
+  enableEditMode() {
+    this.setState({
+      isEditMode: !this.state.isEditMode
+    })
+    console.log('click')
+  }
+  
   render() {
     const hiddenFields = ['password', 'deleted']
-    const details = Object.keys(this.props.details).map((key, index) => {
-      if(!hiddenFields.includes(key)) {
+    const customerDetails = Object.keys(this.props.details).map((detail, index) => {
+      if(!hiddenFields.includes(detail)) {
         return(
           <td key={index}>
-            {this.props.details[key]}
+            {this.props.details[detail]}
           </td>
         )
       } else {
         return null
       }
-    })
-
+    }) 
     return (
       <tr>  
-        { details }
+        { customerDetails }
+        <CustomerListButtons 
+          handleEditMode={this.handleEditMode}
+          handleDelete={null}
+        />
       </tr>
     )
   }
-} 
+}
 
 export default Customer

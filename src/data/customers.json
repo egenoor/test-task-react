@@ -1,0 +1,45 @@
+[
+	{
+		"firstName": "Jane",
+		"lastName": "Doe",
+		"dateOfBirth": "12/04/1992",
+		"username": "janedoe2",
+		"password": "password"
+	},
+	{
+		"firstName": "John",
+		"lastName": "Doe",
+		"dateOfBirth": "18/09/1990",
+		"username": "johndoe",
+		"password": "password"
+	},
+	{
+		"firstName": "Janet",
+		"lastName": "Jackson",
+		"dateOfBirth": "25/01/1998",
+		"username": "janny666",
+		"password": "password"
+	},
+	{
+		"firstName": "Jack",
+		"lastName": "Jackson",
+		"dateOfBirth": "06/02/1995",
+		"username": "jacky06",
+		"password": "password"
+	},
+	{
+		"firstName": "Lisa",
+		"lastName": "Simpson",
+		"dateOfBirth": "18/08/1997",
+		"username": "lisasimpson",
+		"password": "password"
+	},
+	{
+		"firstName": "Bart",
+		"lastName": "Simpson",
+		"dateOfBirth": "07/12/1997",
+		"username": "bartsimpson",
+		"password": "password"
+	}
+]
+
