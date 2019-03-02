@@ -11,11 +11,12 @@ class CustomerList extends Component {
       customers: [],
       isModalVisible: false
     }
+    this.handleDeleteCustomer = this.deleteCustomer.bind(this)
     this.handleOpenModal = this.openModal.bind(this)
     this.getCustomers()
   }
 
-  componentDidUpdate(){
+  componentDidMount(){
     if(this.state.customers.length < 1){
       this.addDummyData()
       this.getCustomers()
@@ -27,6 +28,7 @@ class CustomerList extends Component {
       isModalVisible: !this.state.isModalVisible
     })
   }
+
 
   addDummyData () {
     testCustomers.forEach(async customer => {
@@ -41,6 +43,31 @@ class CustomerList extends Component {
     })
   }
 
+  deleteCustomer (e) {
+    let customersCopy = [...this.state.customers] 
+    const name = e.target.getAttribute('name') 
+    const match = customersCopy.filter(customer => customer.username === name)[0]
+    const index = customersCopy.indexOf(match)
+    if (index !== -1) {
+      customersCopy.splice(index, 1)
+    }
+
+    fetch('/api/deleteCustomer', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username: name})
+    })
+      .then(res => {
+        this.setState({customers: customersCopy})
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   getCustomers () {
     fetch('/api/getAllCustomers')
       .then(customers => customers.json())
@@ -48,6 +75,9 @@ class CustomerList extends Component {
         this.setState({
           customers
         })
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
   
@@ -68,7 +98,11 @@ class CustomerList extends Component {
     let tableHeaders
     const hiddenFields = ['password', 'deleted']
     const customers = this.state.customers.map((customer, index) =>
-      <Customer key={index} details={customer} />
+      <Customer 
+        key={index} 
+        details={customer}
+        handleDeleteCustomer={this.handleDeleteCustomer}
+      />
     )
     if (this.state.customers.length > 0) {
       tableHeaders = Object.keys(this.state.customers[0]).map((header, index) => {

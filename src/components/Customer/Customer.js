@@ -21,7 +21,6 @@ class Customer extends Component {
     this.setState({
       isEditMode: !this.state.isEditMode
     })
-    console.log('click')
   }
   
   render() {
@@ -42,7 +41,8 @@ class Customer extends Component {
         { customerDetails }
         <CustomerListButtons 
           handleEditMode={this.handleEditMode}
-          handleDelete={null}
+          handleDelete={this.props.handleDeleteCustomer}
+          username={this.props.details.username}
         />
       </tr>
     )
