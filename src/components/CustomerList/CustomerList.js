@@ -3,27 +3,35 @@ import './CustomerList.scss'
 import Customer from '../Customer'
 import testCustomers from '../../data/customers.json'
 import AddCustomerButton from '../AddCustomerButton'
+import CustomerForm from '../CustomerForm'
+import Modal from '../Modal'
+import Loader from '../Loader'
 
 class CustomerList extends Component {
   constructor(props){
     super(props)
     this.state = {
       customers: [],
-      isModalVisible: false
+      isModalVisible: false,
+      loading: true
     }
     this.handleDeleteCustomer = this.deleteCustomer.bind(this)
-    this.handleOpenModal = this.openModal.bind(this)
+    this.handleToggleModal = this.toggleModal.bind(this)
+    this.handleGetCustomers = this.getCustomers.bind(this)
+  }
+
+  componentDidMount() {
     this.getCustomers()
+      .then(res => {
+        if(this.state.customers.length < 1){
+          this.addDummyData()
+          this.getCustomers()
+        }
+        this.setState({loading: false})
+      }) 
   }
 
-  componentDidMount(){
-    if(this.state.customers.length < 1){
-      this.addDummyData()
-      this.getCustomers()
-    }
-  }
-
-  openModal() {
+  toggleModal() {
     this.setState({
       isModalVisible: !this.state.isModalVisible
     })
@@ -69,7 +77,7 @@ class CustomerList extends Component {
   }
 
   getCustomers () {
-    fetch('/api/getAllCustomers')
+    return fetch('/api/getAllCustomers')
       .then(customers => customers.json())
       .then(customers => {
         this.setState({
@@ -94,7 +102,7 @@ class CustomerList extends Component {
     return words.join(' ')
   }
 
-  render () {
+  render () { 
     let tableHeaders
     const hiddenFields = ['password', 'deleted']
     const customers = this.state.customers.map((customer, index) =>
@@ -120,24 +128,36 @@ class CustomerList extends Component {
     } else {
       tableHeaders = null
     }
-
-    return (
-      <div className="CustomerList">
-        <table>
-          <thead>
-            <tr>
-              {tableHeaders}
-              <AddCustomerButton 
-                handleAddModal={this.handleAddModal}
-              />
-            </tr>
-          </thead>
-          <tbody>
-            {customers}
-          </tbody>
-        </table>
-      </div>
-    );
+    if (!this.state.loading) {
+      return (
+          <div className="CustomerList">
+            <table>
+              <thead>
+                <tr>
+                  {tableHeaders}
+                  <AddCustomerButton 
+                    handleToggleModal={this.handleToggleModal}
+                  />
+                </tr>
+              </thead>
+              <tbody>
+                {customers}
+              </tbody>
+            </table>
+            {this.state.isModalVisible &&
+              <Modal 
+                handleClose={this.handleToggleModal}
+                content={
+                  <CustomerForm
+                    handleClose={this.handleToggleModal}
+                    getAllCustomers={this.handleGetCustomers}
+                  />}
+              />}
+        </div>      
+      )
+    } else {
+      return <Loader/>
+    }
   }
 }
 

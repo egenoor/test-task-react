@@ -4,7 +4,7 @@ import './AddCustomerButton.scss'
 const AddCustomerButton = props => {
   return(
     <th className="AddCustomerButton">
-        <button onClick={props.handleAddModal}>Add</button>
+        <button onClick={props.handleToggleModal}>Add</button>
     </th>
   )
 }

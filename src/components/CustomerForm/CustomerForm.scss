@@ -1,0 +1,50 @@
+@import "../../scss/_colors.scss";
+@import "../../scss/_fonts.scss";
+
+.CustomerForm {
+  &__Form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    input[type="text"],
+    input[type="date"], 
+    input[type="password"] {
+      height: 32px;
+      width: 300px;
+      margin-top: 15px;
+      border-radius: 5px;
+      border: solid 1px $silver;
+      padding-left: 15px;
+
+      &:focus{
+        transition: border 0.6s;
+        border: solid 1px $green;
+        outline: none;
+      }
+    }
+    
+    input[type="submit"] {
+      width: 300px;
+      margin: 30px 0;
+      background-color: $green;
+      padding: 8px 15px;
+      border-radius: 5px;
+      color: $white;
+      transition: background-color 1s;
+
+      &:hover {
+        background-color: $lightgreen;
+      }
+    }
+
+    label {
+      display:flex;
+      flex-direction: column; 
+      margin-top: 20px;
+      color: $gray;
+      font-weight: $medium-font;
+      font-size: 14px;
+    }
+  }
+}
