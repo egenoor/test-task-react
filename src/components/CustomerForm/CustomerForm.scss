@@ -45,6 +45,10 @@
       color: $gray;
       font-weight: $medium-font;
       font-size: 14px;
+      max-width: 300px;
+    }
+    .srv-validation-message{
+      color: $red;
     }
   }
 }
