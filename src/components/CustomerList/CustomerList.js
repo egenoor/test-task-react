@@ -37,7 +37,6 @@ class CustomerList extends Component {
     })
   }
 
-
   addDummyData () {
     testCustomers.forEach(async customer => {
       await window.fetch('/api/addCustomer', {
@@ -53,27 +52,26 @@ class CustomerList extends Component {
 
   deleteCustomer (e) {
     let customersCopy = [...this.state.customers] 
-    const name = e.target.getAttribute('name') 
-    const match = customersCopy.filter(customer => customer.username === name)[0]
+    const id = e.target.id
+    const match = customersCopy.filter(customer => customer.id.toString() === id)[0]
     const index = customersCopy.indexOf(match)
     if (index !== -1) {
       customersCopy.splice(index, 1)
+      fetch('/api/deleteCustomer', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+      })
+        .then(res => {
+          this.setState({customers: customersCopy})
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
-
-    fetch('/api/deleteCustomer', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username: name})
-    })
-      .then(res => {
-        this.setState({customers: customersCopy})
-      })
-      .catch(err => {
-        console.log(err)
-      })
   }
 
   getCustomers () {
@@ -109,13 +107,13 @@ class CustomerList extends Component {
       <Customer 
         key={index} 
         details={customer}
+        getAllCustomers={this.handleGetCustomers}
         handleDeleteCustomer={this.handleDeleteCustomer}
       />
     )
     if (this.state.customers.length > 0) {
       tableHeaders = Object.keys(this.state.customers[0]).map((header, index) => {
         if(!hiddenFields.includes(header)) {
-          
           return (
             <th key={index}>
               {this.formatText(header)}
@@ -128,6 +126,7 @@ class CustomerList extends Component {
     } else {
       tableHeaders = null
     }
+
     if (!this.state.loading) {
       return (
           <div className="CustomerList">
