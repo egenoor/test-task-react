@@ -28,7 +28,8 @@ class CustomerList extends Component {
           this.getCustomers()
         }
         this.setState({loading: false})
-      }) 
+        this.props.handleStopLoading()
+      })
   }
 
   toggleModal() {
@@ -103,14 +104,15 @@ class CustomerList extends Component {
   render () { 
     let tableHeaders
     const hiddenFields = ['password', 'deleted']
-    const customers = this.state.customers.map((customer, index) =>
+    const customers = this.state.customers.map(customer =>
       <Customer 
-        key={index} 
+        key={customer.username} 
         details={customer}
         getAllCustomers={this.handleGetCustomers}
         handleDeleteCustomer={this.handleDeleteCustomer}
       />
     )
+    
     if (this.state.customers.length > 0) {
       tableHeaders = Object.keys(this.state.customers[0]).map((header, index) => {
         if(!hiddenFields.includes(header)) {

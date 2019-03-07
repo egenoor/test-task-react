@@ -1,25 +1,20 @@
 @import "../../scss/_colors.scss";
 @import "../../scss/_fonts.scss";
 
+
 .CustomerListButtons {
   display: flex;
   align-items: center;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   height: 32px;
-  opacity: 0;
-  transition: opacity 1s;
+ }
 
   .EditButtonContainer {
     margin-left: 5px;
     color: $green;
     font-weight: $medium-font;
     cursor: pointer;
-    transition: color 0.5s;
-
-    &:hover {
-      color: $lightgreen;
-    }
   }
 
   .DeleteButtonContainer {
@@ -31,11 +26,6 @@
     margin-right: -30px;
     cursor: pointer;
     font-weight: $medium-font;
-
-    &:hover {
-      background-color: $lightred;
-      transition: background-color 1s;
-    }
 
     .DeleteButton {
       width: 16px;
@@ -58,4 +48,26 @@
       }
     }
   }
-}
+  
+  .EllipsisButtonContainer {
+    background: none;
+    border: 0 none;
+    line-height: normal;
+    overflow: visible;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+  
+    .Dot {
+      background-color: $gray;
+      margin: 0 auto;
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 3px;
+      border-radius: 50%;
+    }
+  }

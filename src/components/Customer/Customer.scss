@@ -1,0 +1,13 @@
+@import "../../scss/_colors.scss";
+@import "../../scss/fonts";
+@import "../../scss/_functions.scss";
+
+.Customer {
+  .srv-validation-message {
+    position: absolute;
+    left: 25%;
+    font-size: rem(12px);
+    color: $red;
+    font-weight: $medium-font;
+  }
+}

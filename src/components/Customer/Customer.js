@@ -40,6 +40,7 @@ class Customer extends Component {
     this.setState({
       areButtonsVisible: !this.state.areButtonsVisible
     })
+    console.log(this.state.areButtonsVisible)
   }
 
   enableEditMode() {
@@ -70,6 +71,7 @@ class Customer extends Component {
           this.setState(this.state)
           this.enableEditMode()
           this.props.getAllCustomers()
+          this.showButtons(false)
         })
         .catch(err => {
           console.log(err)
@@ -130,9 +132,11 @@ class Customer extends Component {
     })
 
     return (
-      <tr>  
+      <tr className="Customer">  
         { customerDetails }
         <CustomerListButtons
+          areButtonsVisible={this.state.areButtonsVisible}
+          handleShowButtons={this.handleShowButtons}
           isEditVisible={this.state.isEditVisible}
           handleEnableEditMode={this.handleEnableEditMode}
           handleEditCustomer={this.handleEditCustomer}

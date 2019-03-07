@@ -1,5 +1,7 @@
 @import "../../scss/_colors.scss";
 @import "../../scss/_fonts.scss";
+@import "../../scss/_variables.scss";
+@import "../../scss/_functions.scss";
 
 .CustomerForm {
   &__Form {
@@ -22,11 +24,14 @@
         border: solid 1px $green;
         outline: none;
       }
+      @media(max-width: $desktop-view-breaking-point) {
+        width: 240px;
+      }
     }
     
     input[type="submit"] {
       width: 300px;
-      margin: 30px 0;
+      margin: 30px 0 30px 15px;
       background-color: $green;
       padding: 8px 15px;
       border-radius: 5px;
@@ -36,6 +41,11 @@
       &:hover {
         background-color: $lightgreen;
       }
+
+      @media(max-width: $desktop-view-breaking-point) {
+        margin-left: 0;
+        width: 240px;
+      }
     }
 
     label {
@@ -44,7 +54,7 @@
       margin-top: 20px;
       color: $gray;
       font-weight: $medium-font;
-      font-size: 14px;
+      font-size: rem(14px);
       max-width: 300px;
     }
     .srv-validation-message {
